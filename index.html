@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Free-Settling Calculator (MSO)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <h1>Mechanical Separation – Free-Settling Calculator</h1>
+  <p>Enter properties. The app computes K → regime → (b₁,n) → v<sub>t</sub>, Re, C<sub>d</sub>, F.</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Inputs</h2>
+    <form id="calc-form">
+      <div class="grid">
+        <label>Particle diameter D (m)
+          <input type="number" step="any" id="D" placeholder="e.g. 1e-3" required>
+        </label>
+
+        <label>Particle density ρ<sub>p</sub> (kg/m³)
+          <input type="number" step="any" id="rho_p" placeholder="e.g. 2500" required>
+        </label>
+
+        <label>Fluid density ρ (kg/m³)
+          <input type="number" step="any" id="rho" placeholder="e.g. 1000" required>
+        </label>
+
+        <label>Viscosity μ (Pa·s)
+          <input type="number" step="any" id="mu" placeholder="e.g. 0.001" required>
+        </label>
+
+        <label>Gravity g (m/s²)
+          <input type="number" step="any" id="g" value="9.81" required>
+        </label>
+
+        <label>Tuning constant a for K (–)
+          <input type="number" step="any" id="aK" value="1">
+        </label>
+      </div>
+
+      <details>
+        <summary>Advanced: override regime limits (optional)</summary>
+        <div class="grid">
+          <label>Stokes ↔ Interm. (K<sub>1</sub>)
+            <input type="number" step="any" id="K1" value="3.3">
+          </label>
+          <label>Interm. ↔ Newton (K<sub>2</sub>)
+            <input type="number" step="any" id="K2" value="43.6">
+          </label>
+          <label>Max Newton K<sub>max</sub>
+            <input type="number" step="any" id="Kmax" value="2360">
+          </label>
+        </div>
+      </details>
+
+      <button type="submit">Compute</button>
+      <button type="button" id="demo">Fill demo</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Results</h2>
+    <div id="results" class="results"></div>
+  </section>
+
+  <section class="card">
+    <h2>Formulas used</h2>
+    <ul>
+      <li>K = a·√( g·ρ·(ρ<sub>p</sub>−ρ)·D³ / μ² )</li>
+      <li>Regime by K: &lt;K1 → Stokes (b₁=24,n=1) ; K1–K2 → Interm. (18.5,0.6) ; ≥K2 → Newton (0.44,0)</li>
+      <li>v<sub>t</sub> = [ 4Dg(ρ<sub>p</sub>−ρ)/(3b₁ρ) ]<sup>1/(2−n)</sup> · ( μ/(ρD) )<sup>n/(2−n)</sup></li>
+      <li>Re = ρ v<sub>t</sub> D / μ ; C<sub>d</sub> = b₁ / Reⁿ ; F = ½ ρ C<sub>d</sub> A v<sub>t</sub>², A = πD²/4</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>Made for EMI – GPI / MSO practice. Host on GitHub Pages.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
